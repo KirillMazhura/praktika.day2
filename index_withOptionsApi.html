@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day2</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        .red {
+            color: red;
+        }
+        .table-row {
+            border: 1px solid #dddddd;
+	        padding: 5px;
+            text-align: center;
+        }
+        .table {
+	    width: 50%;
+	    margin-bottom: 20px;
+	    border: 1px solid #dddddd;
+	    border-collapse: collapse;
+        }
+        .th {
+            font-weight: bold;
+	    padding: 5px;
+	    background: #efefef;
+	    border: 1px solid #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="search">
+        <table class="table">
+            <tr>
+                <th class="th" v-for="c in columns">
+                    {{ c }}
+                </th>
+            </tr>
+            <tr v-for="s in students" v-bind:class="search!==''&&s.ПІБ.toLowerCase().includes(search.toLowerCase()) ? 'red' : 'black'">
+                <td class="table-row">
+                    {{ s.ПІБ}}
+                </td>
+                <td class="table-row">
+                    {{ s.Група }}
+                </td>
+                <td class="table-row">
+                    {{ s.Рік_народження }}
+                </td>
+                <td class="table-row">
+                    <input type="checkbox">
+                </td>
+                <td class="table-row">
+                    <button @click="deleteStudent(s.id)">Видалити</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    var studentsArray = [
+            {
+                "id":"1",
+                "ПІБ":"Мажура Кирило Олегович",
+                "Група":"РПЗ 20 2/9",
+                "Рік_народження":"2005",
+                "Здав_нездав":"true"
+            },
+            {
+                "id":"2",
+                "ПІБ":"Добровольский Євгеній Олександрович",
+                "Група":"РПЗ 20 2/9",
+                "Рік_народження":"2005",
+                "Здав_нездав":"true"
+            },
+            {
+                "id":"3",
+                "ПІБ":"Пугач Костянтин Андрійович",
+                "Група":"РПЗ 20 2/9",
+                "Рік_народження":"2004",
+                "Здав_нездав":"true"
+            },
+  	        {
+                "id":"4",
+                "ПІБ":"Іванов Іван Іванович",
+                "Група":"РПЗ 20 500/700",
+                "Рік_народження":"2000",
+                "Здав_нездав":"false"
+            },
+            ]
+        var columnsArray = [
+                "ПІБ",
+                "Група",
+                "Рік_народження",
+                "Здав_нездав"
+        ]
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            const students = studentsArray
+            const columns = columnsArray
+            const search = ""
+            deleteStudent = function(id) {
+                this.students = this.students.filter((el) => el.id !== id)
+            }
+            return {students, columns, deleteStudent, search}
+        }
+    }).mount('#app')
+</script>
+</html>
