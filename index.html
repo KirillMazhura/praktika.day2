@@ -120,10 +120,6 @@
             const birthDate = ref("")
             const pass = ref("")
             const test = ref(null)
-            const styleObj = ref({
-                width:"100px",
-                heigth:"100px"
-            })
             deleteStudent = function(id) {
                 students.value = students.value.filter((el) => el.id !== id)
             }
