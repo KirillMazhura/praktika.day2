@@ -30,7 +30,17 @@
 </head>
 <body>
     <div id="app">
-        <input type="text" v-model="search">
+        <input type="text" v-model="search" placeholder="search">
+        <div class="addButtonBlock">
+            <input id="inputId" type="text" v-model="studentId" placeholder="123" disabled>
+            <input type="text" placeholder="ПІБ" v-model="pib">
+            <input type="text" placeholder="Група" v-model="group">
+            <input type="text" placeholder="Рік_народження" v-model="birthDate">
+
+            <button @click="students.push({'id':students.length+1,'ПІБ':pib, 'Група':group, 'Рік_народження':birthDate})">
+                Додати
+            </button>
+        </div>
         <table class="table">
             <tr>
                 <th class="th" v-for="c in columns">
@@ -55,33 +65,37 @@
                 </td>
             </tr>
         </table>
+        <h3 v-for="s in students">
+            {{ s }}
+        </h3>
+        <div id="colorfullBlock" v-bind:style="{width: '100px',height: '100px', backgroundColor: 'red'}" onmouseover="document.getElementById('colorfullBlock').style.backgroundColor = 'black'" onmouseout="document.getElementById('colorfullBlock').style.backgroundColor = 'red'"></div>
     </div>
 </body>
 <script>
     var studentsArray = [
             {
-                "id":"1",
+                "id": 1,
                 "ПІБ":"Мажура Кирило Олегович",
                 "Група":"РПЗ 20 2/9",
                 "Рік_народження":"2005",
                 "Здав_нездав":"true"
             },
             {
-                "id":"2",
+                "id": 2,
                 "ПІБ":"Добровольский Євгеній Олександрович",
                 "Група":"РПЗ 20 2/9",
                 "Рік_народження":"2005",
                 "Здав_нездав":"true"
             },
             {
-                "id":"3",
+                "id": 3,
                 "ПІБ":"Пугач Костянтин Андрійович",
                 "Група":"РПЗ 20 2/9",
                 "Рік_народження":"2004",
                 "Здав_нездав":"true"
             },
   	        {
-                "id":"4",
+                "id": 4,
                 "ПІБ":"Іванов Іван Іванович",
                 "Група":"РПЗ 20 500/700",
                 "Рік_народження":"2000",
@@ -100,10 +114,20 @@
             const students = ref(studentsArray)
             const columns = ref(columnsArray)
             const search = ref("")
+            const studentId = ref("")
+            const pib = ref("")
+            const group = ref("")
+            const birthDate = ref("")
+            const pass = ref("")
+            const test = ref(null)
+            const styleObj = ref({
+                width:"100px",
+                heigth:"100px"
+            })
             deleteStudent = function(id) {
                 students.value = students.value.filter((el) => el.id !== id)
             }
-            return {students, columns, deleteStudent, search}
+            return {students, columns, deleteStudent, search, studentId, pib, group, birthDate, pass}
         }
     }).mount('#app')
 </script>
